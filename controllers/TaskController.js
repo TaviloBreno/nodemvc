@@ -61,4 +61,20 @@ module.exports = class TaskController {
       .then(res.redirect("/tasks"))
       .catch((err) => console.log());
   }
+
+  static toggleTaskStatus(req, res) {
+    const id = req.body.id;
+
+    console.log(req.body);
+
+    const task = {
+      done: req.body.done === "0" ? true : false,
+    };
+
+    Task.update(task, { where: { id: id } })
+      .then(res.redirect("/tasks"))
+      .catch((err) => console.log());
+  }
 };
+
+
