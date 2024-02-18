@@ -18,6 +18,10 @@ module.exports = class TaskController {
   }
 
   static showTasks(req, res) {
-    res.render("tasks/all");
+    Task.findAll({ raw: true })
+      .then((data) => {
+        res.render("tasks/all", { tasks: data });
+      })
+      .catch((err) => console.log(err));
   }
 };
