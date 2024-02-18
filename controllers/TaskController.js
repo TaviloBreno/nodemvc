@@ -20,8 +20,22 @@ module.exports = class TaskController {
   static showTasks(req, res) {
     Task.findAll({ raw: true })
       .then((data) => {
-        res.render("tasks/all", { tasks: data });
+        let emptyTasks = false;
+
+        if (data.length === 0) {
+          emptyTasks = true;
+        }
+
+        res.render("tasks/all", { tasks: data, emptyTasks });
       })
       .catch((err) => console.log(err));
+  }
+
+  static removeTask(req, res) {
+    const id = req.body.id;
+
+    Task.destroy({ where: { id: id } })
+      .then(res.redirect("/tasks"))
+      .catch((err) => console.log());
   }
 };
