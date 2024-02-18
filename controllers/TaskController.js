@@ -38,4 +38,14 @@ module.exports = class TaskController {
       .then(res.redirect("/tasks"))
       .catch((err) => console.log());
   }
+
+  static updateTask(req, res) {
+    const id = req.params.id;
+
+    Task.findOne({ where: { id: id }, raw: true })
+      .then((data) => {
+        res.render("tasks/edit", { task: data });
+      })
+      .catch((err) => console.log());
+  }
 };
